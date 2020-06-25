@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Бургеры</title>
+    <script>
+
+        class Calculator {
+            constructor(tagName) {
+                this.list = document.getElementsByTagName(tagName);
+            }
+
+            onlyChecked() {
+                let checkboxesChecked = [];
+                for (let i = 0; i < this.list.length; i++) {
+                    if (this.list[i].checked) {
+                        checkboxesChecked.push(this.list[i]);
+                    }
+                }
+                return checkboxesChecked;
+            }
+
+            totalCost(list) {
+                return list.reduce(function(sum, current) {
+                    return sum + parseInt(current.dataset.price);
+                }, 0);
+            }
+
+            totalCalories(list) {
+                return list.reduce(function(sum, current) {
+                    return sum + parseInt(current.dataset.calories);
+                }, 0);
+            }
+
+            totalAllinText(outputClass) {
+                return document.querySelector(outputClass).innerHTML =
+                    "Стоимость заказа " + this.totalCost(this.onlyChecked()) +
+                    " рублей c калорийностью " + this.totalCalories(this.onlyChecked()) + " калорий.";
+            }
+        }
+
+        const calculate = new Calculator('input');
+
+    </script>
+</head>
+<body style="font-family: Arial, serif" onload="calculate.totalAllinText('.answer');">
+<form onchange="calculate.totalAllinText('.answer');">
+    <p>Выбрать гамбургер:</p>
+    <input name="size" type="radio" id="1" checked="checked" data-price="50" data-calories="20">
+    <label for="1">Маленький (50 рублей, 20 калорий)</label><br>
+    <input name="size" type="radio" id="2" data-price="100" data-calories="40">
+    <label for="2">Большой (100 рублей, 40 калорий)</label><br>
+
+    <p>Выбрать обязательно начинку:</p>
+    <input name="stuffing" type="radio" id="3" checked="checked" data-price="10" data-calories="20">
+    <label for="3">С сыром (+10 рублей, +20 калорий)</label><br>
+    <input name="stuffing" type="radio" id="4" data-price="20" data-calories="5">
+    <label for="4">С салатом (+20 рублей, +5 калорий)</label><br>
+    <input name="stuffing" type="radio" id="5" data-price="15" data-calories="10">
+    <label for="5">С картофелем (+15 рублей, +10 калорий)</label><br>
+
+    <p>Дополнительно по желанию:</p>
+    <input name="addons" type="checkbox" id="6" data-price="15" data-calories="0">
+    <label for="6">Посыпать приправой (+15 рублей, +0 калорий)</label><br>
+    <input name="addons" type="checkbox" id="7" data-price="20" data-calories="5">
+    <label for="7">Полить майонезом (+20 рублей, +5 калорий)</label><br>
+
+    <p class="answer" style="font-weight: bold;"></p>
+</form>
+</body>
+</html>
