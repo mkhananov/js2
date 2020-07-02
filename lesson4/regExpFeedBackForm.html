@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback form</title>
+    <style>
+        input {
+            display: block;
+            margin-bottom: 15px;
+        }
+    </style>
+    <script>
+        function validName() {
+            let re, messageText, inputStyle;
+            re = /^([a-zа-яё]+|\d+)$/i;
+            let name = document.getElementById('name').value;
+            let test = re.test(name);
+            if (test) {
+                messageText = "";
+                inputStyle = "border-color: none;";
+            }
+            else {
+                messageText = "Invalid name";
+                inputStyle = "border-color: red;";
+            }
+            document.getElementById('name-error').innerHTML = messageText;
+            document.getElementById('name').style = inputStyle
+            return test;
+        }
+
+
+
+        function validMail() {
+            let re, messageText, inputStyle;
+            re = /^[\w]+\.?[\w]*@\w+\.\w{2,8}$/i;
+            let email = document.getElementById('email').value;
+            let test = re.test(email);
+            if (test) {
+                messageText = "";
+                inputStyle = "border-color: none;";
+            }
+            else {
+                messageText = "Invalid e-mail";
+                inputStyle = "border-color: red;";
+            }
+            document.getElementById('email-error').innerHTML = messageText;
+            document.getElementById('email').style = inputStyle
+            return test;
+        }
+
+        function validPhone() {
+            let re, messageText, inputStyle;
+            re = /^\+\d\(\d{3}\)\d{3}-\d{4}$/;
+            let phone = document.getElementById('phone').value;
+            let test = re.test(phone);
+            if (test) {
+                messageText = "";
+                inputStyle = "border-color: none;";
+            } else {
+                messageText = "Invalid phone";
+                inputStyle = "border-color: red;";
+            }
+            document.getElementById('phone-error').innerHTML = messageText;
+            document.getElementById('phone').style = inputStyle;
+            return test;
+        }
+    </script>
+</head>
+
+<body>
+<form>
+    <h1>Feedback form</h1>
+
+    <label for="name">Name</label>
+    <input id="name" oninput="validName()">
+
+    <label for="phone">Phone (ex. +7(000)000-0000)</label><br>
+    <input id="phone" oninput="validPhone()">
+
+    <label for="email">E-mail</label><br>
+    <input id="email" oninput="validMail()">
+
+    <label for="text">Text</label><br>
+    <input id="text">
+
+    <button onclick="validName(); validPhone(); validPhone()">Submit</button>
+    <p id="name-error"></p>
+    <p id="phone-error"></p>
+    <p id="email-error"></p>
+
+
+
+</form>
+</body>
+</html>
