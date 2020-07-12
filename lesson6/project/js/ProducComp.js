@@ -2,15 +2,15 @@ Vue.component('products', {
     data(){
         return {
             catalogUrl: '/catalogData.json',
+            filteredGoods: [],
             products: [],
-            filtered: [],
             imgCatalog: 'images/photo.png',
         }
     },
     methods: {
-        filter(){
-            let regexp = new RegExp(this.userSearch, 'i');
-            this.filtered = this.products.filter(el => regexp.test(el.product_name));
+        filter(value){
+            let regexp = new RegExp(value, 'i');
+            this.filteredGoods = this.products.filter(el => regexp.test(el.product_name));
         }
     },
     mounted(){
@@ -18,13 +18,14 @@ Vue.component('products', {
             .then(data => {
                 for(let el of data){
                     this.products.push(el);
-                    this.filtered.push(el);
+
                 }
             });
+        this.filteredGoods = this.products;
     },
     template: `
         <div class="products">
-            <product v-for="item of filtered" :key="item.id_product" :img="imgCatalog" :product="item"></product>
+            <product v-for="item of filteredGoods" :key="item.id_product" :img="imgCatalog" :product="item"></product>
         </div>
     `
 });
